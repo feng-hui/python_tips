@@ -14,8 +14,9 @@ class CommonTime(object):
     @staticmethod
     def get_timestamp(is_integer=None):
         """
-        :return 默认返回当前时间的时间戳,格式为浮点数(例如:1517019311.778607)
-                 当is_integer的值合法的情况下,返回整数格式的时间戳(例如:1517019311(10位))
+        :return 返回时间戳
+        默认返回当前时间的时间戳,格式为浮点数(例如:1517019311.778607)
+        当is_integer的值合法的情况下,返回整数格式的时间戳(例如:1517019311(10位))
         """
         if not is_integer:
             return time.time()
