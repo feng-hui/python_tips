@@ -70,13 +70,17 @@ class CommonDateTime(object):
             assert isinstance(dt, datetime.datetime)
             return datetime.datetime.strftime(dt, '%Y-%m-%d %H:%M:%S')
 
-    def str_to_timstamp(self):
-        """时间字符串转化为时间戳"""
-        pass
+    @staticmethod
+    def timestamp_to_dt(timestamp):
+        return datetime.datetime.fromtimestamp(timestamp)
 
-    def timestamp_to_str(self):
+    def str_to_timestamp(self, str_time):
+        """时间字符串转化为时间戳"""
+        return self.now_timestamp(self.str_to_dt(str_time))
+
+    def timestamp_to_str(self, timestamp):
         """时间戳转化为时间字符串"""
-        pass
+        return self.dt_to_str(self.timestamp_to_dt(timestamp))
 
     def yesterday(self):
         """获取昨天的时间"""
@@ -124,6 +128,15 @@ if __name__ == "__main__":
     # 获取明天的时间
     tomorrow = common_date_time.tomorrow()
     print('8、获取明天的时间：', tomorrow)
+
+    # 字符串时间转化为时间戳
+    string_to_timestamp = common_date_time.str_to_timestamp(any_str_time)
+    print('9、字符串时间转化为时间戳：', string_to_timestamp)
+
+    # 时间戳转化为字符串时间
+    timestamp_to_string = common_date_time.timestamp_to_str(string_to_timestamp)
+    print('10、时间戳转化为字符串时间：', timestamp_to_string)
+
 
 
 
