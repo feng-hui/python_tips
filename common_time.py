@@ -56,6 +56,19 @@ class CommonTime(object):
         else:
             return time.strftime('%Y-%m-%d', t_tuple)
 
+    @staticmethod
+    def str_to_tuple(str_time, date_format=1):
+        if date_format == 1:
+            return time.strptime(str_time, '%Y-%m-%d %H:%M:%S')
+        else:
+            return time.strptime(str_time, '%Y-%m-%d')
+
+    def str_to_timestamp(self, str_time):
+        return self.timestamp_of_anytime(self.str_to_tuple(str_time))
+
+    def timestamp_to_str(self, timestamp):
+        return self.tuple_to_str(self.t_tuple_now(timestamp))
+
     def get_now_year(self):
         """:return: 返回当前时间的年份"""
         return self.t_tuple_now().tm_year
@@ -90,18 +103,23 @@ if __name__ == "__main__":
 
     # 字符串转时间元组
     get_t_tuple = common_time.t_tuple('2018-01-29')
+    print('(1)[2018-01-29]对应的时间元组为:', get_t_tuple)
 
     # 当前时间的时间元组
     now_t_tuple = common_time.t_tuple_now()
+    print('(2)当前时间对应的时间元组为:', now_t_tuple)
 
     # 任意时间的时间元组
     any_t_tuple = common_time.t_tuple_now(28800)
+    print('(3)任意时间戳[28800]对应的时间元组为:', any_t_tuple)
 
     # 当前时间的时间戳(浮点数)
     now_time_stamp = common_time.get_timestamp()
+    print('(4)当前时间的时间戳为(浮点数):', now_time_stamp)
 
     # 当前时间的时间戳(整数)
     now_time_stamp2 = common_time.get_timestamp(is_integer=1)
+    print('(5)当前时间的时间戳为(整数):', now_time_stamp2)
 
     # 返回当前时间的年月日时分秒以及是否为夏令时
     now_year = common_time.get_now_year()
@@ -110,18 +128,14 @@ if __name__ == "__main__":
     now_hour = common_time.get_now_hour()
     now_minute = common_time.get_now_minute()
     now_second = common_time.get_now_seconds()
+    print('(6)当前日期与时间为：{}年{}月{}日 {}点:{}分:{}秒'.format(str(now_year), str(now_month), str(now_day),
+                                                     str(now_hour), str(now_minute), str(now_second)))
+    # 当前时区是否为夏令时
     is_dst = common_time.is_dst()
+    print('(7)当前时区是否为夏令时:{}'.format('是' if is_dst == 1 else '不是'))
 
     # 时间元组转化为字符串
     t_tuple_to_str = common_time.tuple_to_str(now_t_tuple)
     t_tuple_to_str2 = time.asctime(now_t_tuple)
-
-    print('(1)[2018-01-29]对应的时间元组为:', get_t_tuple)
-    print('(2)当前时间对应的时间元组为:', now_t_tuple)
-    print('(3)任意时间戳[28800]对应的时间元组为:', any_t_tuple)
-    print('(4)当前时间的时间戳为(浮点数):', now_time_stamp)
-    print('(5)当前时间的时间戳为(整数):', now_time_stamp2)
-    print('(6)当前日期与时间为：{}年{}月{}日 {}点:{}分:{}秒'.format(str(now_year), str(now_month), str(now_day),
-                                                  str(now_hour), str(now_minute), str(now_second)))
-    print('(7)当前时区是否为夏令时:{}'.format('是' if is_dst == 1 else '不是'))
     print('(8)当前时间的字符串时间格式的时间为:', t_tuple_to_str)
+
