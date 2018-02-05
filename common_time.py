@@ -28,21 +28,11 @@ class CommonTime(object):
         :return: 返回任意时间的时间戳,默认返回浮点数
         """
         assert isinstance(str_time, str)
-        time_stamp = self.t_tuple(str_time)
+        time_stamp = self.str_to_tuple(str_time)
         return time.mktime(time_stamp)
 
     @staticmethod
-    def t_tuple(str_time):
-        """
-        :param str_time: 字符串形式的时间,返回时间元组格式的时间
-        :return: 
-        """
-        if '00:00:00' not in str_time:
-            str_time += ' 00:00:00'
-        return time.strptime(str_time, '%Y-%m-%d %H:%M:%S')
-
-    @staticmethod
-    def t_tuple_now(seconds=None):
+    def timestamp_to_tuple(seconds=None):
         """
         :param seconds: 时间戳
         :return: 默认返回当前时间的时间元组
@@ -51,6 +41,7 @@ class CommonTime(object):
 
     @staticmethod
     def tuple_to_str(t_tuple, date_format=1):
+        """时间元组转化为时间字符串"""
         if date_format == 1:
             return time.strftime('%Y-%m-%d %H:%M:%S', t_tuple)
         else:
@@ -64,53 +55,55 @@ class CommonTime(object):
             return time.strptime(str_time, '%Y-%m-%d')
 
     def str_to_timestamp(self, str_time):
+        """时间字符串转化为时间戳"""
         return self.timestamp_of_anytime(self.str_to_tuple(str_time))
 
     def timestamp_to_str(self, timestamp):
-        return self.tuple_to_str(self.t_tuple_now(timestamp))
+        """时间戳转化为时间字符串"""
+        return self.tuple_to_str(self.timestamp_to_tuple(timestamp))
 
     def get_now_year(self):
         """:return: 返回当前时间的年份"""
-        return self.t_tuple_now().tm_year
+        return self.timestamp_to_tuple().tm_year
 
     def get_now_month(self):
         """:return: 返回当前时间的月份"""
-        return self.t_tuple_now().tm_mon
+        return self.timestamp_to_tuple().tm_mon
 
     def get_now_day(self):
         """:return: 返回当前时间的天"""
-        return self.t_tuple_now().tm_mday
+        return self.timestamp_to_tuple().tm_mday
 
     def get_now_hour(self):
         """:return: 返回当前时间的小时数"""
-        return self.t_tuple_now().tm_hour
+        return self.timestamp_to_tuple().tm_hour
 
     def get_now_minute(self):
         """:return: 返回当前时间的分钟数"""
-        return self.t_tuple_now().tm_min
+        return self.timestamp_to_tuple().tm_min
 
     def get_now_seconds(self):
         """:return: 返回当前时间的秒数"""
-        return self.t_tuple_now().tm_sec
+        return self.timestamp_to_tuple().tm_sec
 
     def is_dst(self):
         """获取当前所处时区是否为夏令时,0不是，1是，-1不确定"""
-        return self.t_tuple_now().tm_isdst
+        return self.timestamp_to_tuple().tm_isdst
 
 
 if __name__ == "__main__":
     common_time = CommonTime()
 
     # 字符串转时间元组
-    get_t_tuple = common_time.t_tuple('2018-01-29')
+    get_t_tuple = common_time.str_to_tuple('2018-01-29 00:00:00')
     print('(1)[2018-01-29]对应的时间元组为:', get_t_tuple)
 
     # 当前时间的时间元组
-    now_t_tuple = common_time.t_tuple_now()
+    now_t_tuple = common_time.timestamp_to_tuple()
     print('(2)当前时间对应的时间元组为:', now_t_tuple)
 
     # 任意时间的时间元组
-    any_t_tuple = common_time.t_tuple_now(28800)
+    any_t_tuple = common_time.timestamp_to_tuple(28800)
     print('(3)任意时间戳[28800]对应的时间元组为:', any_t_tuple)
 
     # 当前时间的时间戳(浮点数)
