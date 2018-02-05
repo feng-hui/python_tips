@@ -131,4 +131,3 @@ if __name__ == "__main__":
     t_tuple_to_str = common_time.tuple_to_str(now_t_tuple)
     t_tuple_to_str2 = time.asctime(now_t_tuple)
     print('(8)当前时间的字符串时间格式的时间为:', t_tuple_to_str)
-
