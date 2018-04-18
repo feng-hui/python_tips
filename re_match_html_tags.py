@@ -9,7 +9,10 @@ import re
 
 
 def remove_special_tags(value):
-    """主要用于爬虫中抓取到的文本处理"""
+    """
+    主要用于爬虫中抓取到的文本处理
+    适用的字符包含[ \t\n\r\f\v]
+    """
     assert isinstance(value, str)
     return re.sub(r'\s+', '', temp_str)
 
