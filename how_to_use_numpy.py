@@ -37,6 +37,7 @@ class NumpyExample(object):
         # 三维数组
         array_ex3 = np.arange(24).reshape(2, 3, 4)
         print('三维数组: \n', array_ex3)
+        print(array_ex3.shape)
 
 
 if __name__ == "__main__":
